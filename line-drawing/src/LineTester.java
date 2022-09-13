@@ -40,9 +40,9 @@ public class LineTester {
             int y0 = (int)(Math.random() * height);
             int y1 = (int)(Math.random() * height);
 
-            long start = System.currentTimeMillis();
+            long start = System.nanoTime();
             panel.drawLineBasic(x0, y0, x1, y1);
-            long end = System.currentTimeMillis();
+            long end = System.nanoTime();
             totalRunTime += (end - start);
 
             // System.out.println("line drawn from (" 
@@ -53,13 +53,22 @@ public class LineTester {
 
     public long generatePresetLinesDDA()
     {
-        // draw random lines
         long totalRunTime = 0;
+        long start = System.nanoTime();
 
-        long start = System.currentTimeMillis();
+        // horizontal line
         panel.drawLineBasic((int)(width * 0.2), height / 2, 
             (int)(width * 0.8), height / 2);
-        long end = System.currentTimeMillis();
+
+        // vertical line
+        panel.drawLineBasic((int)(height/2), (int)(height * 0.2), 
+            (int)(height/2), (int)(height * 0.8));
+
+        // diagonal line with positive slope
+        panel.drawLineBasic((int)(width * 0.2), height / 2, 
+            (int)(width * 0.8), height / 2);
+
+        long end = System.nanoTime();
         totalRunTime += (end - start);
         
         return totalRunTime;
@@ -70,6 +79,6 @@ public class LineTester {
         panel.drawImage();
         frame.add(panel);
         frame.setVisible(true);
-        panel.clearPanel();
+        panel.clearImage();
     }
 }

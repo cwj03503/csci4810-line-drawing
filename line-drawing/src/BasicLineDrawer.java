@@ -67,7 +67,7 @@ public class BasicLineDrawer extends JPanel {
 
     public void clearPanel()
     {
-        buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        this.buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
 }
 
