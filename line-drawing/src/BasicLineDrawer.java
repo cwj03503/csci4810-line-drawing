@@ -6,9 +6,12 @@ import javax.swing.JPanel;
 public class BasicLineDrawer extends JPanel {
 
     private BufferedImage buffer;
-
+    private int width;
+    private int height;
     public BasicLineDrawer(int width, int height)
     {
+        this.width = width;
+        this.height = height;
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
 
@@ -62,6 +65,10 @@ public class BasicLineDrawer extends JPanel {
         this.repaint();
     }
 
+    public void clearPanel()
+    {
+        buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    }
 }
 
 
