@@ -28,11 +28,10 @@ public class LineTester {
         panel.setMaximumSize(new Dimension(width, height));
     }
 
-    public long generateRandomLinesDDA(int numLines)
+    public long generateRandomLinesBasic(int numLines)
     {
         // draw random lines
-        long totalRunTime = 0;
-
+        long time = 0;
         for (int i = 0; i < numLines ; i++)
         {
             int x0 = (int)(Math.random() * width);
@@ -40,37 +39,31 @@ public class LineTester {
             int y0 = (int)(Math.random() * height);
             int y1 = (int)(Math.random() * height);
 
-            long start = System.nanoTime();
-            panel.drawLineBasic(x0, y0, x1, y1);
-            long end = System.nanoTime();
-            totalRunTime += (end - start);
-
-            // System.out.println("line drawn from (" 
-            // + x0 + "," + y0 + ") to (" + x1 + "," + y1 + ").");
+            time += panel.drawLineBasic(x0, y0, x1, y1);
         }
-        return totalRunTime;
+        return time;
     }
 
-    public long generatePresetLinesDDA()
+    public long generatePresetLinesBasic()
     {
         long totalRunTime = 0;
-        long start = System.nanoTime();
 
         // horizontal line
-        panel.drawLineBasic((int)(width * 0.2), height / 2, 
+        totalRunTime += panel.drawLineBasic((int)(width * 0.2), height / 2, 
             (int)(width * 0.8), height / 2);
 
         // vertical line
-        panel.drawLineBasic((int)(height/2), (int)(height * 0.2), 
+        totalRunTime += panel.drawLineBasic((int)(height/2), (int)(height * 0.2), 
             (int)(height/2), (int)(height * 0.8));
 
         // diagonal line with positive slope
-        panel.drawLineBasic((int)(width * 0.2), height / 2, 
-            (int)(width * 0.8), height / 2);
+        totalRunTime += panel.drawLineBasic((int)(width * 0.2), (int)(height * 0.2), 
+            (int)(width * 0.8), (int)(height * 0.8));
 
-        long end = System.nanoTime();
-        totalRunTime += (end - start);
-        
+        // diagonal line with negative slope
+        totalRunTime += panel.drawLineBasic((int)(width * 0.2), (int)(height * 0.8),
+            (int)(width * 0.8), (int)(height * 0.2));
+
         return totalRunTime;
     }
 
