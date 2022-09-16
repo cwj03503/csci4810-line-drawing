@@ -6,6 +6,7 @@ import java.lang.Math;
 public class LineTester {
 
     public BasicLineDrawer basicLineDrawer;
+    public BresenhamLineDrawer bresenhamLineDrawer;
     private JFrame frame;
     private int width;
     private int height;
@@ -26,6 +27,10 @@ public class LineTester {
         basicLineDrawer = new BasicLineDrawer(width, height);
         basicLineDrawer.setLayout(new BoxLayout(basicLineDrawer, BoxLayout.LINE_AXIS));
         basicLineDrawer.setMaximumSize(new Dimension(width, height));
+
+        bresenhamLineDrawer = new BresenhamLineDrawer(width, height);
+        bresenhamLineDrawer.setLayout(new BoxLayout(bresenhamLineDrawer, BoxLayout.LINE_AXIS));
+        bresenhamLineDrawer.setMaximumSize(new Dimension(width, height));
     }
 
     public long generateRandomLines(int numLines, LineDrawer lineDrawer)
@@ -44,7 +49,7 @@ public class LineTester {
         return time;
     }
 
-    public long generatePresetLinesBasic(LineDrawer lineDrawer)
+    public long generatePresetLines(LineDrawer lineDrawer)
     {
         long totalRunTime = 0;
 
