@@ -43,21 +43,19 @@ public class BresenhamLineDrawer extends LineDrawer
         // slope is between 0 and -1
         int deltaX = x1 - x0;
         int deltaY = y1 - y0;
-        int x, y, yi = 1;
+        int yi = 1;
         // reverse direction
         if (deltaY < 0) {
             yi = -1;
             deltaY = -deltaY;
         }
         int D = (2 * deltaY) - deltaX;
-        y = y0;
+        int y = y0;
 
         long startTime = System.nanoTime();
         for (int i = x0; i <= x1; i++)
         {
-            x = i;
-            System.out.println("* drawing point at (" + x + "," + y + ").");
-            buffer.setRGB(x, y, 0xFFFFFF); 
+            buffer.setRGB(i, y, 0xFFFFFF); 
             if (D > 0)
             {
                 y = y + yi;
@@ -76,20 +74,18 @@ public class BresenhamLineDrawer extends LineDrawer
         // slope is between 0 and -1
         int deltaX = x1 - x0;
         int deltaY = y1 - y0;
-        int x, y, xi = 1;
+        int xi = 1;
         // reverse direction
         if (deltaX < 0) {
             xi = -1;
             deltaX = -deltaX;
         }
         int D = (2 * deltaX) - deltaY;
-        x = x0;
+        int x = x0;
         long startTime = System.nanoTime();
         for (int i = y0; i <= y1; i++)
         {
-            y = i;
-            System.out.println("* drawing point at (" + x + "," + y + ").");
-            buffer.setRGB(x, y, 0xFFFFFF); 
+            buffer.setRGB(x, i, 0xFFFFFF); 
             if (D > 0)
             {
                 x = x + xi;

@@ -2,6 +2,7 @@ import javax.swing.*;
 
 import java.awt.Dimension;
 import java.lang.Math;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LineTester {
 
@@ -70,6 +71,120 @@ public class LineTester {
             (int)(width * 0.8), (int)(height * 0.2));
 
         return totalRunTime;
+    }
+
+    public long generateRandomLongLines(int numLines, LineDrawer lineDrawer)
+    {
+        long time = 0;
+        int x0, x1, y0, y1;
+        // draw long lines from bottom to top of frame
+        for (int i = 0; i < numLines/2 ; i++)
+        {
+            x0 = ThreadLocalRandom.current().nextInt(0, width);
+            x1 = ThreadLocalRandom.current().nextInt(0, width);
+            y0 = ThreadLocalRandom.current().nextInt(0, (int)(height * 0.2));
+            y1 = ThreadLocalRandom.current().nextInt((int)(height * 0.8), height);
+
+            time += lineDrawer.drawLine(x0, y0, x1, y1);
+            
+        }
+        // draw lines from left to right of frame
+        for (int i = 0; i < numLines / 2; i++)
+        {
+            y0 = ThreadLocalRandom.current().nextInt(0, height);
+            y1 = ThreadLocalRandom.current().nextInt(0, height);
+            x0 = ThreadLocalRandom.current().nextInt(0, (int)(width * 0.2));
+            x1 = ThreadLocalRandom.current().nextInt((int)(width * 0.8), width);
+
+            time += lineDrawer.drawLine(x0, y0, x1, y1);
+        }
+        return time;
+    }
+
+    public long generateRandomShortLines(int numLines, LineDrawer lineDrawer)
+    {
+        long time = 0;
+        int x0, x1, y0, y1;
+        for (int i = 0; i < numLines ; i++)
+        {
+            x0 = ThreadLocalRandom.current().nextInt((int)(width * 0.2), (int)(width * 0.8));
+            x1 = ThreadLocalRandom.current().nextInt(0,(int)(width * 0.2)) + x0;
+            y0 = ThreadLocalRandom.current().nextInt((int)(height * 0.2), (int)(height * 0.8));
+            y1 = ThreadLocalRandom.current().nextInt(0, (int)(height * 0.2)) + y0;
+
+            time += lineDrawer.drawLine(x0, y0, x1, y1); 
+        }
+        return time;
+    }
+
+    public long generateRandomVerticalLines(int numLines, LineDrawer lineDrawer)
+    {
+        long time = 0;
+        int x0, x1, y0, y1;
+        for (int i = 0; i < numLines ; i++)
+        {
+            x0 = ThreadLocalRandom.current().nextInt(0, width);
+            x1 = x0;
+            y0 = ThreadLocalRandom.current().nextInt(0, height);
+            y1 = ThreadLocalRandom.current().nextInt(0, height);
+
+            time += lineDrawer.drawLine(x0, y0, x1, y1); 
+        }
+        return time;
+    }
+
+    public long generateRandomHorizontalLines(int numLines, LineDrawer lineDrawer)
+    {
+        long time = 0;
+        int x0, x1, y0, y1;
+        for (int i = 0; i < numLines ; i++)
+        {
+            x0 = ThreadLocalRandom.current().nextInt(0, width);
+            x1 = ThreadLocalRandom.current().nextInt(0, width);
+            y0 = ThreadLocalRandom.current().nextInt(0, height);
+            y1 = y0;
+
+            time += lineDrawer.drawLine(x0, y0, x1, y1); 
+        }
+        return time;
+    }
+
+    public void generateCompleteComparativeReport(int numLines)
+    {
+        System.out.println("--- Bresenham vs. Naive Line Drawing Algorithm Comparison ---\n");
+        System.out.println("Drawing\t\t\tBresenham\tSimple");
+
+        System.out.print("N Random lines:\t\t");
+        System.out.print(generateRandomLines(numLines, bresenhamLineDrawer));
+        System.out.print("\t\t");
+        System.out.print(generateRandomLines(numLines, basicLineDrawer));
+        System.out.println();
+
+        System.out.print("N Long lines:\t\t");
+        System.out.print(generateRandomLongLines(numLines, bresenhamLineDrawer));
+        System.out.print("\t\t");
+        System.out.print(generateRandomLongLines(numLines, basicLineDrawer));
+        System.out.println();
+
+
+        System.out.print("N Short lines:\t\t");
+        System.out.print(generateRandomShortLines(numLines, bresenhamLineDrawer));
+        System.out.print("\t\t");
+        System.out.print(generateRandomShortLines(numLines, basicLineDrawer));
+        System.out.println();
+
+        System.out.print("N Vertical lines:\t");
+        System.out.print(generateRandomVerticalLines(numLines, bresenhamLineDrawer));
+        System.out.print("\t\t");
+        System.out.print(generateRandomVerticalLines(numLines, basicLineDrawer));
+        System.out.println();
+
+        System.out.print("N Horizontal lines:\t");
+        System.out.print(generateRandomHorizontalLines(numLines, bresenhamLineDrawer));
+        System.out.print("\t\t");
+        System.out.print(generateRandomHorizontalLines(numLines, basicLineDrawer));
+        System.out.println();
+
     }
 
     public void displayFrame(LineDrawer panel)

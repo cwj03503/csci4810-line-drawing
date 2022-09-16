@@ -34,23 +34,15 @@ public class BasicLineDrawer extends LineDrawer {
         double deltaY = (double)(y1 - y0);
         long startTime;
 
-        // debugging line information
-        System.out.println("--- Line from (" + x0 + "," + y0 + ") to (" + x1 + "," + y1 + "). ---");
-        System.out.println("delta x: " + deltaX);
-        System.out.println("delta y: " + deltaY);
-        System.out.println("slope: " + deltaX/deltaY);
-
         if (deltaX <= 0.0000001)
         {
             // line is vertical
             int y;
             int x = x0;
-            System.out.println("type: vertical");
             startTime = System.nanoTime();
             for (int i = 0; i <= (deltaY - 1); i++)
             {
                 y = y0 + i;
-                System.out.println("* drawing point at (" + x + "," + y + ").");
                 buffer.setRGB(x, y, 0xFFFFFF);
             }
         }
@@ -64,14 +56,12 @@ public class BasicLineDrawer extends LineDrawer {
                 // line is shallow
                 int x;
                 double y;
-                System.out.println("type: shallow");
                 startTime = System.nanoTime();
 
                 for (int i = 0; i <= (deltaX - 1); i++)
                 {
                     x = x0 + i;
                     y = (slope * x) + yIntercept;
-                    System.out.println("* drawing point at (" + x + "," + y + ").");
                     buffer.setRGB(x, (int)y, 0xFFFFFF); // truncation occurs with cast
                 }
             }
@@ -81,20 +71,16 @@ public class BasicLineDrawer extends LineDrawer {
                 int y;
                 double x;
                 int direction = Integer.signum((int)deltaY);
-                System.out.println("type: steep");
                 startTime = System.nanoTime();
 
                 for (int i = 0; i <= (Math.abs(deltaY) - 1); i++)
                 {
                     y = y0 + (i * direction);
                     x = (y - yIntercept)/slope;
-                    System.out.println("* drawing point at (" + x + "," + y + ").");
                     buffer.setRGB((int)x, y, 0xFFFFFF); // truncation occurs with cast
                 }
             } 
         }
-        
-        System.out.println("--------------------------------------------");
         return System.nanoTime() - startTime;
     }
 
