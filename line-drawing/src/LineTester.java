@@ -5,7 +5,7 @@ import java.lang.Math;
 
 public class LineTester {
 
-    private BasicLineDrawer panel;
+    public BasicLineDrawer basicLineDrawer;
     private JFrame frame;
     private int width;
     private int height;
@@ -22,13 +22,13 @@ public class LineTester {
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // initialize panel
-        panel = new BasicLineDrawer(width, height);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        panel.setMaximumSize(new Dimension(width, height));
+        // initialize panels
+        basicLineDrawer = new BasicLineDrawer(width, height);
+        basicLineDrawer.setLayout(new BoxLayout(basicLineDrawer, BoxLayout.LINE_AXIS));
+        basicLineDrawer.setMaximumSize(new Dimension(width, height));
     }
 
-    public long generateRandomLinesBasic(int numLines)
+    public long generateRandomLines(int numLines, LineDrawer lineDrawer)
     {
         // draw random lines
         long time = 0;
@@ -39,35 +39,35 @@ public class LineTester {
             int y0 = (int)(Math.random() * height);
             int y1 = (int)(Math.random() * height);
 
-            time += panel.drawLineBasic(x0, y0, x1, y1);
+            time += lineDrawer.drawLine(x0, y0, x1, y1);
         }
         return time;
     }
 
-    public long generatePresetLinesBasic()
+    public long generatePresetLinesBasic(LineDrawer lineDrawer)
     {
         long totalRunTime = 0;
 
         // horizontal line
-        totalRunTime += panel.drawLineBasic((int)(width * 0.2), height / 2, 
+        totalRunTime += lineDrawer.drawLine((int)(width * 0.2), height / 2, 
             (int)(width * 0.8), height / 2);
 
         // vertical line
-        totalRunTime += panel.drawLineBasic((int)(height/2), (int)(height * 0.2), 
+        totalRunTime += lineDrawer.drawLine((int)(height/2), (int)(height * 0.2), 
             (int)(height/2), (int)(height * 0.8));
 
         // diagonal line with positive slope
-        totalRunTime += panel.drawLineBasic((int)(width * 0.2), (int)(height * 0.2), 
+        totalRunTime += lineDrawer.drawLine((int)(width * 0.2), (int)(height * 0.2), 
             (int)(width * 0.8), (int)(height * 0.8));
 
         // diagonal line with negative slope
-        totalRunTime += panel.drawLineBasic((int)(width * 0.2), (int)(height * 0.8),
+        totalRunTime += lineDrawer.drawLine((int)(width * 0.2), (int)(height * 0.8),
             (int)(width * 0.8), (int)(height * 0.2));
 
         return totalRunTime;
     }
 
-    public void displayFrame()
+    public void displayFrame(LineDrawer panel)
     {
         panel.drawImage();
         frame.add(panel);

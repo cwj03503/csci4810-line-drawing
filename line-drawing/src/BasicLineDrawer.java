@@ -1,45 +1,22 @@
-import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+public class BasicLineDrawer extends LineDrawer {
 
-public class BasicLineDrawer extends JPanel {
-
-    private BufferedImage buffer;
-    private int width;
-    private int height;
     public BasicLineDrawer(int width, int height)
     {
-        this.width = width;
-        this.height = height;
-        buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    }
-
-    public void drawImage()
-    {
-        ImageIcon icon = new ImageIcon(buffer);
-        JLabel iconLabel = new JLabel(icon);
-        
-        this.add(iconLabel);
-        this.revalidate();
-        this.repaint();
-    }
-
-    public void clearImage()
-    {
-        this.buffer.flush();
+        super(width,height);
     }
 
     /*
-     * Draws a line with endpoints roughly at (x0,y0) and (y0,y1) and returns 
-     * an execution time in nanoseconds. Note that the execution time includes
-     * only the time spent in the critical loop of the algorithm.
+     * @Override
+     * Draws a line with endpoints roughly at (x0,y0) and (y0,y1) using the naive 
+     * approach and returns an execution time in nanoseconds. Note that the execution
+     * time includes only the time spent in the critical loop of the algorithm.
      * @param x0  the x-value of the starting point of the line.
      * @param x1  the x-value of the ending point of the line.
      * @param y0  the y-value of the starting point of the line.
      * @param y1  the y-value of the ending point of the line.
      */
-    public long drawLineBasic(int x0, int y0, int x1, int y1) {
+    public long drawLine(int x0, int y0, int x1, int y1) 
+    {
 
         // if end point is to the left of start point, reverse them
         if (x1 < x0)
@@ -122,5 +99,3 @@ public class BasicLineDrawer extends JPanel {
     }
 
 }
-
-
