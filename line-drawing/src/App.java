@@ -9,13 +9,36 @@ public class App {
         
         Scanner scanner = new Scanner(System.in);
         LineTester tester = new LineTester(FRAME_WIDTH, FRAME_HEIGHT);
-
-        // System.out.println("Bresenham Line Drawing Algorithm:");
-        // totalRunTime = tester.generateRandomHorizontalLines(NUM_LINES, tester.bresenhamLineDrawer);
+        // tester.generateCompleteComparativeReport(NUM_LINES);
         // tester.displayFrame(tester.bresenhamLineDrawer);
-        // System.out.println("Total time generating " + NUM_LINES + " random lines: " + totalRunTime + " ns.");
-        tester.generateCompleteComparativeReport(NUM_LINES);
 
+        // Preset Comparison
+        comparePresetLines(scanner, tester);
+
+        // Random Lines Test
+        compareRandomLines(scanner, tester, NUM_LINES);
+        
         scanner.close();
     }
+
+    private static void comparePresetLines(Scanner scanner, LineTester tester) {
+        tester.generatePresetLines(tester.bresenhamLineDrawer);
+        tester.displayFrame(tester.bresenhamLineDrawer);
+        scanner.nextLine();
+
+        tester.generatePresetLines(tester.basicLineDrawer);
+        tester.displayFrame(tester.basicLineDrawer);
+        scanner.nextLine();
+    }
+
+    private static void compareRandomLines(Scanner scanner, LineTester tester, int numLines) {
+        tester.generateRandomLines(numLines, tester.bresenhamLineDrawer);
+        tester.displayFrame(tester.bresenhamLineDrawer);
+        scanner.nextLine();
+
+        tester.generateRandomLines(numLines, tester.basicLineDrawer);
+        tester.displayFrame(tester.basicLineDrawer);
+        scanner.nextLine();
+    }
+
 }

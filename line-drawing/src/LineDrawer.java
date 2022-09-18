@@ -27,10 +27,11 @@ public abstract class LineDrawer extends JPanel {
      */
     public void drawImage()
     {
+        this.removeAll();
         ImageIcon icon = new ImageIcon(buffer);
         JLabel iconLabel = new JLabel(icon);
-        
         this.add(iconLabel);
+
         this.revalidate();
         this.repaint();
     }

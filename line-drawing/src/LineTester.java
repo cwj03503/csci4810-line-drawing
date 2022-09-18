@@ -189,8 +189,12 @@ public class LineTester {
 
     public void displayFrame(LineDrawer panel)
     {
+        frame.getContentPane().removeAll();
+        frame.setTitle("Line Drawer: " + panel.getClass().getSimpleName() +  " (" + width + " x " + height + ")");
         panel.drawImage();
         frame.add(panel);
+        frame.revalidate();
+        frame.repaint();
         frame.setVisible(true);
         panel.clearImage();
     }

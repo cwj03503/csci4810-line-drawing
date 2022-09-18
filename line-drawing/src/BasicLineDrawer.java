@@ -5,7 +5,7 @@ public class BasicLineDrawer extends LineDrawer {
         super(width,height);
     }
 
-    /*
+    /**
      * @Override
      * Draws a line with endpoints roughly at (x0,y0) and (y0,y1) using the naive 
      * approach and returns an execution time in nanoseconds. Note that the execution

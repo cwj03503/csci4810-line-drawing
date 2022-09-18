@@ -1,11 +1,24 @@
 public class BresenhamLineDrawer extends LineDrawer
 {
-
     public BresenhamLineDrawer(int width, int height)
     {
         super(width, height);
     }
 
+    /**
+     * @Override
+     * Draws a line with endpoints roughly at (x0,y0) and (y0,y1) using Brensenham's 
+     * algorithm and returns an execution time in nanoseconds. This method is heavily
+     * based on the implementation provided on the Wikipedia Article for Bresenham's
+     * line algorithm. See the Wikipedia implementation 
+     * <a href="https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm">here.</a>
+     * Note that the execution time includes only the time spent in the critical loop
+     * of the algorithm.
+     * @param x0  the x-value of the starting point of the line.
+     * @param x1  the x-value of the ending point of the line.
+     * @param y0  the y-value of the starting point of the line.
+     * @param y1  the y-value of the ending point of the line.
+     */
     public long drawLine(int x0, int y0, int x1, int y1) {
         
         int deltaX = x1 - x0;
@@ -38,6 +51,16 @@ public class BresenhamLineDrawer extends LineDrawer
         }
     }
 
+    /**
+     * Draws a line with endpoints roughly at (x0,y0) and (y0,y1), given that the slope
+     * of the line between these points is between 0 an -1. Returns an execution time 
+     * in nanoseconds. Note that the execution time includes only the time spent in the
+     * critical loop of the algorithm.
+     * @param x0  the x-value of the starting point of the line.
+     * @param x1  the x-value of the ending point of the line.
+     * @param y0  the y-value of the starting point of the line.
+     * @param y1  the y-value of the ending point of the line.
+     */
     private long drawLineShallow(int x0, int y0, int x1, int y1)
     {
         // slope is between 0 and -1
@@ -69,6 +92,16 @@ public class BresenhamLineDrawer extends LineDrawer
         return System.nanoTime() - startTime;
     }
 
+    /**
+     * Draws a line with endpoints roughly at (x0,y0) and (y0,y1), given that the slope
+     * of the line between these points is less than -1. Returns an execution time 
+     * in nanoseconds. Note that the execution time includes only the time spent in the
+     * critical loop of the algorithm.
+     * @param x0  the x-value of the starting point of the line.
+     * @param x1  the x-value of the ending point of the line.
+     * @param y0  the y-value of the starting point of the line.
+     * @param y1  the y-value of the ending point of the line.
+     */
     private long drawLineSteep(int x0, int y0, int x1, int y1)
     {
         // slope is between 0 and -1
@@ -99,6 +132,4 @@ public class BresenhamLineDrawer extends LineDrawer
         return System.nanoTime() - startTime;
     }
 
-
-    
 }
