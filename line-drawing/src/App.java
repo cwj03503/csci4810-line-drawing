@@ -3,20 +3,24 @@ import java.util.Scanner;
 public class App {
     static final int FRAME_WIDTH = 500;
     static final int FRAME_HEIGHT = 500;
-    static final int NUM_LINES = 100;
 
     public static void main(String[] args) throws Exception {
         
+        int numLines;
         Scanner scanner = new Scanner(System.in);
         LineTester tester = new LineTester(FRAME_WIDTH, FRAME_HEIGHT);
-        // tester.generateCompleteComparativeReport(NUM_LINES);
-        // tester.displayFrame(tester.bresenhamLineDrawer);
+        
+        System.out.println("Enter the number of lines to be drawn for testing: ");
+        numLines = scanner.nextInt();
 
-        // Preset Comparison
         comparePresetLines(scanner, tester);
+        compareRandomLines(scanner, tester, numLines);
+        compareRandomVerticalLines(scanner, tester, numLines);
+        compareRandomHorizontalLines(scanner, tester, numLines);
+        compareRandomLongLines(scanner, tester, numLines);
+        compareRandomShortLines(scanner, tester, numLines);
 
-        // Random Lines Test
-        compareRandomLines(scanner, tester, NUM_LINES);
+        tester.generateCompleteComparativeReport(numLines);
         
         scanner.close();
     }
@@ -37,6 +41,47 @@ public class App {
         scanner.nextLine();
 
         tester.generateRandomLines(numLines, tester.basicLineDrawer);
+        tester.displayFrame(tester.basicLineDrawer);
+        scanner.nextLine();
+    }
+
+    private static void compareRandomVerticalLines(Scanner scanner, LineTester tester, int numLines) {
+        tester.generateRandomVerticalLines(numLines, tester.bresenhamLineDrawer);
+        tester.displayFrame(tester.bresenhamLineDrawer);
+        scanner.nextLine();
+
+        tester.generateRandomVerticalLines(numLines, tester.basicLineDrawer);
+        tester.displayFrame(tester.basicLineDrawer);
+        scanner.nextLine();
+    }
+
+
+    private static void compareRandomHorizontalLines(Scanner scanner, LineTester tester, int numLines) {
+        tester.generateRandomHorizontalLines(numLines, tester.bresenhamLineDrawer);
+        tester.displayFrame(tester.bresenhamLineDrawer);
+        scanner.nextLine();
+
+        tester.generateRandomHorizontalLines(numLines, tester.basicLineDrawer);
+        tester.displayFrame(tester.basicLineDrawer);
+        scanner.nextLine();
+    }
+
+    private static void compareRandomLongLines(Scanner scanner, LineTester tester, int numLines) {
+        tester.generateRandomLongLines(numLines, tester.bresenhamLineDrawer);
+        tester.displayFrame(tester.bresenhamLineDrawer);
+        scanner.nextLine();
+
+        tester.generateRandomLongLines(numLines, tester.basicLineDrawer);
+        tester.displayFrame(tester.basicLineDrawer);
+        scanner.nextLine();
+    }
+
+    private static void compareRandomShortLines(Scanner scanner, LineTester tester, int numLines) {
+        tester.generateRandomShortLines(numLines, tester.bresenhamLineDrawer);
+        tester.displayFrame(tester.bresenhamLineDrawer);
+        scanner.nextLine();
+
+        tester.generateRandomShortLines(numLines, tester.basicLineDrawer);
         tester.displayFrame(tester.basicLineDrawer);
         scanner.nextLine();
     }

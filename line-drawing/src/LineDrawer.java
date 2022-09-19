@@ -41,7 +41,7 @@ public abstract class LineDrawer extends JPanel {
      */
     public void clearImage()
     {
-        this.buffer.flush();
+        this.buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
 
     /*

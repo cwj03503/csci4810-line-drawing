@@ -12,6 +12,17 @@ public class LineTester {
     private int width;
     private int height;
 
+    interface simpleReportGenerator {
+        void reportRandom(int n);
+    }
+
+    /**
+     * Creates a new LineTester, with a JFrame of the given width and height and 
+     * two LineDrawer instances, one being BresenhamLineDrawer and the other being
+     * BasicLineDrawer. 
+     * @param width  the width of this LineTester's JFrame
+     * @param height  the height of this LineTester's JFrame
+     */
     public LineTester(int width, int height)
     {
         this.width = width;
@@ -149,42 +160,117 @@ public class LineTester {
         return time;
     }
 
+    private long averageTimeRandomLines(int numSamples, int numLines, LineDrawer lineDrawer)
+    {
+        long totalTime = 0;
+        for (int i = 0; i < numSamples; i++)
+        {
+            totalTime += generateRandomLines(numLines, bresenhamLineDrawer);
+        }
+        return totalTime/numSamples;
+    }
+
+    private long averageTimeLongLines(int numSamples, int numLines, LineDrawer lineDrawer)
+    {
+        long totalTime = 0;
+        for (int i = 0; i < numSamples; i++)
+        {
+            totalTime += generateRandomLongLines(numLines, bresenhamLineDrawer);
+        }
+        return totalTime/numSamples;
+    }
+
+    private long averageTimeShortLines(int numSamples, int numLines, LineDrawer lineDrawer)
+    {
+        long totalTime = 0;
+        for (int i = 0; i < numSamples; i++)
+        {
+            totalTime += generateRandomShortLines(numLines, bresenhamLineDrawer);
+        }
+        return totalTime/numSamples;
+    }
+
+    private long averageTimeVerticalLines(int numSamples, int numLines, LineDrawer lineDrawer)
+    {
+        long totalTime = 0;
+        for (int i = 0; i < numSamples; i++)
+        {
+            totalTime += generateRandomVerticalLines(numLines, bresenhamLineDrawer);
+        }
+        return totalTime/numSamples;
+    }
+
+    private long averageTimeHorizontalLines(int numSamples, int numLines, LineDrawer lineDrawer)
+    {
+        long totalTime = 0;
+        for (int i = 0; i < numSamples; i++)
+        {
+            totalTime += generateRandomHorizontalLines(numLines, bresenhamLineDrawer);
+        }
+        return totalTime/numSamples;
+    }
+
+    
     public void generateCompleteComparativeReport(int numLines)
     {
+        int numSamples = 100;
+        
         System.out.println("--- Bresenham vs. Naive Line Drawing Algorithm Comparison ---\n");
+        System.out.println("Average time in (ns) drawing " + numLines + " lines.");
         System.out.println("Drawing\t\t\tBresenham\tSimple");
 
         System.out.print("N Random lines:\t\t");
-        System.out.print(generateRandomLines(numLines, bresenhamLineDrawer));
+        System.out.print(averageTimeRandomLines(numSamples, numLines, bresenhamLineDrawer));
         System.out.print("\t\t");
-        System.out.print(generateRandomLines(numLines, basicLineDrawer));
+        System.out.print(averageTimeRandomLines(numSamples, numLines, basicLineDrawer));
         System.out.println();
 
         System.out.print("N Long lines:\t\t");
-        System.out.print(generateRandomLongLines(numLines, bresenhamLineDrawer));
+        System.out.print(averageTimeLongLines(numSamples, numLines, bresenhamLineDrawer));
         System.out.print("\t\t");
-        System.out.print(generateRandomLongLines(numLines, basicLineDrawer));
+        System.out.print(averageTimeLongLines(numSamples, numLines, basicLineDrawer));
         System.out.println();
 
 
         System.out.print("N Short lines:\t\t");
-        System.out.print(generateRandomShortLines(numLines, bresenhamLineDrawer));
+        System.out.print(averageTimeShortLines(numSamples, numLines, bresenhamLineDrawer));
         System.out.print("\t\t");
-        System.out.print(generateRandomShortLines(numLines, basicLineDrawer));
+        System.out.print(averageTimeShortLines(numSamples, numLines, basicLineDrawer));
         System.out.println();
 
         System.out.print("N Vertical lines:\t");
-        System.out.print(generateRandomVerticalLines(numLines, bresenhamLineDrawer));
+        System.out.print(averageTimeVerticalLines(numSamples, numLines, bresenhamLineDrawer));
         System.out.print("\t\t");
-        System.out.print(generateRandomVerticalLines(numLines, basicLineDrawer));
+        System.out.print(averageTimeVerticalLines(numSamples, numLines, basicLineDrawer));
         System.out.println();
 
         System.out.print("N Horizontal lines:\t");
-        System.out.print(generateRandomHorizontalLines(numLines, bresenhamLineDrawer));
+        System.out.print(averageTimeHorizontalLines(numSamples, numLines, bresenhamLineDrawer));
         System.out.print("\t\t");
-        System.out.print(generateRandomHorizontalLines(numLines, basicLineDrawer));
+        System.out.print(averageTimeHorizontalLines(numSamples, numLines, basicLineDrawer));
         System.out.println();
 
+    }
+
+    public void generateSizeComparativeReport()
+    {
+        int numSamples = 1000;
+        System.out.println("--- Bresenham vs. Naive Line Drawing Algorithm Comparison ---\n");
+        System.out.println("Average time in (ns) drawing N Lines");
+        System.out.println("N\t\tBresenham\tSimple");
+        simpleReportGenerator reporter = (n) ->
+        {
+            System.out.print(n + "\t\t");
+            System.out.print(averageTimeRandomLines(numSamples, n, bresenhamLineDrawer));
+            System.out.print("\t\t");
+            System.out.print(averageTimeRandomLines(numSamples, n, basicLineDrawer));
+            System.out.println();
+        };
+        reporter.reportRandom(1);
+        reporter.reportRandom(10);
+        reporter.reportRandom(100);
+        reporter.reportRandom(1000);
+        reporter.reportRandom(10000);
     }
 
     public void displayFrame(LineDrawer panel)
