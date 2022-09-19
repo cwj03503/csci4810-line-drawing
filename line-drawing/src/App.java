@@ -12,7 +12,9 @@ public class App {
         
         System.out.println("Enter the number of lines to be drawn for testing: ");
         numLines = scanner.nextInt();
+        scanner.nextLine();
 
+        // tester.displayFrame(tester.bresenhamLineDrawer);
         comparePresetLines(scanner, tester);
         compareRandomLines(scanner, tester, numLines);
         compareRandomVerticalLines(scanner, tester, numLines);
